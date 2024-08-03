@@ -29,4 +29,27 @@ public class PostService {
 
         return post;
     }
+
+    public Post updatePost(Long id, PostDTO postDTO) {
+        return data
+                .stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .map(
+                            p -> {
+                                p.setTitle(postDTO.getTitle());
+                                p.setContent(postDTO.getContent());
+                                return p;
+                            }
+                )
+                .orElse(null);
+
+    }
+
+    public void deletePost(Long id) {
+        data.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .ifPresent(p -> data.remove(p));
+    }
 }
